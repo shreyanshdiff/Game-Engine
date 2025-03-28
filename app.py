@@ -18,10 +18,9 @@ pipeline, knn, df = load_model()
 
 # --- Custom CSS for shadcn-like UI ---
 def inject_custom_css():
-    st.markdown(f"""
+    st.markdown("""
     <style>
-<style>
-    :root {{
+    :root {
         --background: hsl(0 0% 100%);
         --foreground: hsl(222.2 84% 4.9%);
         --primary: hsl(221.2 83.2% 53.3%);
@@ -30,31 +29,31 @@ def inject_custom_css():
         --input: hsl(214.3 31.8% 91.4%);
         --ring: hsl(221.2 83.2% 53.3%);
         --radius: 0.5rem;
-    }}
+    }
     
-    .dark {{
+    .dark {
         --background: hsl(222.2 84% 4.9%);
         --foreground: hsl(210 40% 98%);
-    }}
+    }
     
     /* Main container */
-    .main {{
+    .main {
         max-width: 800px;
         margin: 0 auto;
-    }}
+    }
     
     /* Card styling */
-    .card {{
+    .card {
         background: var(--background);
         border: 1px solid var(--border);
         border-radius: var(--radius);
         padding: 1.5rem;
         margin-bottom: 1rem;
         box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
-    }}
+    }
     
     /* Button styling */
-    .btn {{
+    .btn {
         background-color: var(--primary);
         color: var(--primary-foreground);
         border-radius: var(--radius);
@@ -63,14 +62,14 @@ def inject_custom_css():
         border: none;
         cursor: pointer;
         transition: all 0.2s;
-    }}
+    }
     
-    .btn:hover {{
+    .btn:hover {
         background-color: hsl(221.2 83.2% 43.3%);
-    }}
+    }
     
     /* Input styling */
-    .input {{
+    .input {
         display: flex;
         width: 100%;
         border-radius: var(--radius);
@@ -80,15 +79,15 @@ def inject_custom_css():
         font-size: 0.875rem;
         line-height: 1.25rem;
         transition: border-color 0.2s;
-    }}
+    }
     
-    .input:focus {{
+    .input:focus {
         outline: none;
         border-color: var(--ring);
-    }}
+    }
     
     /* Badge styling */
-    .badge {{
+    .badge {
         display: inline-flex;
         align-items: center;
         border-radius: 9999px;
@@ -97,10 +96,10 @@ def inject_custom_css():
         padding: 0.25rem 0.75rem;
         font-size: 0.75rem;
         font-weight: 500;
-    }}
+    }
     
     /* Game card */
-    .game-card {{
+    .game-card {
         display: flex;
         gap: 1rem;
         padding: 1rem;
@@ -108,43 +107,44 @@ def inject_custom_css():
         border-radius: var(--radius);
         margin-bottom: 1rem;
         transition: all 0.2s;
-    }}
+    }
     
-    .game-card:hover {{
+    .game-card:hover {
         box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
-    }}
+    }
     
-    .game-info {{
+    .game-info {
         flex: 1;
-    }}
+    }
     
-    .game-title {{
+    .game-title {
         font-weight: 600;
         margin-bottom: 0.25rem;
-    }}
+    }
     
-    .game-meta {{
+    .game-meta {
         display: flex;
         gap: 1rem;
         margin-bottom: 0.5rem;
         font-size: 0.875rem;
         color: hsl(215.4 16.3% 46.9%);
-    }}
+    }
     
-    .game-tags {{
+    .game-tags {
         display: flex;
         gap: 0.5rem;
         flex-wrap: wrap;
         margin-top: 0.5rem;
-    }}
+    }
     
-    .game-tag {{
+    .game-tag {
         background-color: hsl(210 40% 96.1%);
         color: hsl(215.4 16.3% 46.9%);
         padding: 0.25rem 0.5rem;
         border-radius: 9999px;
         font-size: 0.75rem;
-    }}    </style>
+    }
+    </style>
     """, unsafe_allow_html=True)
 
 inject_custom_css()
@@ -177,20 +177,17 @@ with st.container():
             placeholder="Enter a game title..."
         )
     with col2:
-        # Changed to a proper hidden button implementation
         st.markdown("""
         <div style="display: flex; align-items: flex-end; height: 100%;">
             <button class="btn" id="search-btn">Search</button>
         </div>
         <script>
             document.getElementById("search-btn").addEventListener("click", function() {
-                // This will trigger the Streamlit button click
                 window.parent.document.querySelector('.stButton button').click();
             });
         </script>
         """, unsafe_allow_html=True)
     
-    # This is our actual search button that does the work
     search_clicked = st.button("Search", key="search_btn", help="Click to search")
     
     st.markdown("</div>", unsafe_allow_html=True)
@@ -266,7 +263,9 @@ if search_clicked or search_term:
                                 {tags_html}
                             </div>
                         </div>
-                        <a href="{game['Link']}" target="_blank" class="btn" style="text-decoration: none; align-self: center;">View</a>
+                        <a href="{game['Link']}" target="_blank" style="text-decoration: none;">
+                            <button class="btn" style="align-self: center; cursor: pointer; margin: auto 0;">View</button>
+                        </a>
                     </div>
                     """, unsafe_allow_html=True)
                     
